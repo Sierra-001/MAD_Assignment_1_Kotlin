@@ -35,7 +35,7 @@ fun PlaceholderScreen() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "FIELD PROTOCOL\nINITIALISING...",
+            text = "${fieldProtocolTips.size} PROTOCOLS LOADED\nSYSTEM READY",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center
         )
