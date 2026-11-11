@@ -32,9 +32,9 @@ private val FieldDarkColorScheme = darkColorScheme(
 )
 
 val Poppins = FontFamily(
-    Font(R.font.Poppins_Regular, FontWeight.Normal),
-    Font(R.font.Poppins_Medium, FontWeight.Medium),
-    Font(R.font.Poppins_Bold, FontWeight.Bold)
+    Font(R.font.poppins_regular, FontWeight.Normal),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_bold, FontWeight.Bold)
 )
 
 private val FieldTypography = Typography(
