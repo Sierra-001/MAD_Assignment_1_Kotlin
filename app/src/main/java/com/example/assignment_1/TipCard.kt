@@ -1,8 +1,13 @@
 package com.example.assignment_1
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +20,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -26,8 +34,31 @@ import com.example.assignment_1.ui.theme.OffWhite
 
 @Composable
 fun TipCard(tip: Tip) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.97f else 1f,
+        label = "cardScale"
+    )
+
+    val badgeColor by animateColorAsState(
+        targetValue = if (isPressed) MutedOlive else MutedOlive.copy(alpha = 0.6f),
+        label = "badgeColor"
+    )
+
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { /* reserved: detail view */ }
+            ),
         shape = RoundedCornerShape(2.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondary
@@ -44,7 +75,7 @@ fun TipCard(tip: Tip) {
             Text(
                 text = "DAY ${tip.day}",
                 style = MaterialTheme.typography.labelSmall,
-                color = MutedOlive
+                color = badgeColor
             )
 
             Spacer(modifier = Modifier.height(8.dp))
